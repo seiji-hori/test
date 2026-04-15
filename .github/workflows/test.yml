@@ -1,7 +1,7 @@
 name: Update Google Sheets
 
 on:
-  workflow_dispatch:
+ workflow_dispatch:    # 手動実行可能
 
 jobs:
   update:
@@ -21,4 +21,4 @@ jobs:
         env:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
-        run: python append_to_sheets.py
+        run: python fetch_fear_greed.py
