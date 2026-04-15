@@ -1,4 +1,4 @@
-name: Update Google Sheets
+name: test
 
 on:
  workflow_dispatch:    # 手動実行可能
