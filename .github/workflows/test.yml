@@ -22,3 +22,12 @@ jobs:
           GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           SPREADSHEET_ID: ${{ secrets.SPREADSHEET_ID }}
         run: python fetch_fear_greed.py
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add data/fear_greed.csv
+          git commit -m "Update Fear & Greed CSV" || echo "No changes to commit"
+          git push
+          
