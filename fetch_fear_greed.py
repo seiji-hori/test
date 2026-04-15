@@ -4,6 +4,9 @@ from pathlib import Path
 
 CSV_PATH = Path("data/fear_greed.csv")
 
+def ensure_dir():
+    CSV_PATH.parent.mkdir(parents=True, exist_ok=True)
+
 def read_last_update():
     """CSV の最後の 更新日時 を返す。無ければ None。"""
     if not CSV_PATH.exists():
@@ -12,28 +15,27 @@ def read_last_update():
     with open(CSV_PATH, "r", encoding="cp932") as f:
         rows = list(csv.reader(f))
         if len(rows) <= 1:
-            return None  # ヘッダーのみ or 空
-        last_row = rows[-1]
-        return last_row[0]  # 更新日時 列
+            return None
+        return rows[-1][0]  # 更新日時
 
 def main():
+    ensure_dir()  # ← これが重要！
+
     result = fear_and_greed.get()
 
     new_last_update = result.last_update.strftime("%Y-%m-%d %H:%M:%S")
     prev_last_update = read_last_update()
 
-    # すでに同じ更新日時ならスキップ
     if prev_last_update == new_last_update:
         print("No update. 更新日時が同じためスキップ:", new_last_update)
         return
 
-    # 初回はヘッダー付きで作成
     write_header = not CSV_PATH.exists()
 
     row = [
-        new_last_update,   # 更新日時
-        result.value,      # 指数
-        result.description # 状態
+        new_last_update,
+        result.value,
+        result.description
     ]
 
     with open(CSV_PATH, "a", newline="", encoding="cp932", errors="ignore") as f:
