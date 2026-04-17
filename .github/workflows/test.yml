@@ -2,7 +2,7 @@ name: test
 
 on:
   schedule:
-    - cron: "0 9 * * *"
+    - cron: "0 9 * * *"  # 1800(JST)
   workflow_dispatch:    # 手動実行可能
 
 jobs:
