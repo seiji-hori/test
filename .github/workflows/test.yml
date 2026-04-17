@@ -1,7 +1,9 @@
 name: test
 
 on:
- workflow_dispatch:    # 手動実行可能
+  schedule:
+    - cron: "0 9 * * *"
+  workflow_dispatch:    # 手動実行可能
 
 jobs:
   update:
